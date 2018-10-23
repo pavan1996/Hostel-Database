@@ -1,0 +1,184 @@
+{% load widget_tweaks %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+<script type="text/javascript"> 
+	function back_to_home() {
+	  location.href = '/Home';
+	}
+
+
+	function reset_filter()
+  	{
+      
+        location.href ="/Home/filter/"
+  	}
+
+
+  function transaction_entry( id){
+    location.href = "/Home/transaction/"+id;
+  }
+
+  function view_person(id){
+    location.href = "/Home/profile/"+id;
+  }
+
+  function updateinfo(id){
+    location.href = "/Home/updateinfo/"+id;
+  }
+
+
+  function excelExport(){
+    
+  }
+
+  function wordExport(){
+
+  }
+
+  
+
+  function exports(fil){
+
+    $.ajax({
+        url: "http://127.0.0.1:8000/Home/export/xls/",
+        headers: {'X-CSRFToken': '{{ csrf_token }}'},
+        type: "post",
+        data: {'fil' : fil},
+        success: function(d) {
+            alert(d);
+        }
+    });
+  }
+</script>
+
+
+
+
+{% block content %}
+  <form method="get"  style="font-family: 'Times New Roman', Times, serif;" id="form_for_filter" >
+    <div class="well" style="background-color: #d3d9e2">
+     
+      <div class="row">
+        <div class="form-group col-sm-4 col-md-3">
+           <strong>Person ID</strong> 
+          {% render_field filter.form.person_id class="form-control" %}
+        </div>
+        <div class="form-group col-sm-4 col-md-3">
+          <strong>First Name</strong> 
+          {% render_field filter.form.first_name class="form-control" %}
+        </div>
+        <div class="form-group col-sm-4 col-md-3">
+          <strong>Middle Name</strong>
+          {% render_field filter.form.middle_name class="form-control" %}
+        </div>
+        <div class="form-group col-sm-4 col-md-3">
+          <strong>Last Name</strong>
+          {% render_field filter.form.last_name class="form-control" %}
+        </div>
+        <div class="form-group col-sm-4 col-md-3">
+          <strong>Person Type</strong>
+          {% render_field filter.form.person_type class="form-control" %}
+        </div>
+        <div class="form-group col-sm-4 col-md-3">
+          <strong>City</strong>
+          {% render_field filter.form.city class="form-control" %}
+        </div>
+        <div class="form-group col-sm-4 col-md-3">
+          <strong>State</strong>
+          {% render_field filter.form.state class="form-control" %}
+        </div>
+        <div class="form-group col-sm-4 col-md-3">
+          <strong>Zipcode</strong>
+          {% render_field filter.form.zipcode class="form-control" %}
+        </div>
+        <div class="form-group col-sm-4 col-md-3">
+          <strong>Curent Status</strong>
+          {% render_field filter.form.current_status class="form-control" %}
+        </div>
+        <div class="form-group col-sm-4 col-md-3">
+          <strong>Mode of Communication</strong>
+          {% render_field filter.form.mode_of_communication class="form-control" %}
+        </div>
+        <div class="form-group col-sm-4 col-md-3">
+          <strong>Reference Person</strong>
+          {% render_field filter.form.reference_person class="form-control" %}
+        </div>
+
+        <div class="form-group col-sm-4 col-md-3">
+          <strong>Period of stay start</strong>
+          {% render_field filter.form.period_of_stay_start class="form-control" %}
+        </div>
+
+        <div class="form-group col-sm-4 col-md-3">
+          <strong>Period of stay end</strong>
+          {% render_field filter.form.period_of_stay_end class="form-control" %}
+        </div>
+      </div>
+      
+      <button type="button" class="btn btn-primary" style="height: 34px;" onclick="back_to_home()">
+      	<span class="glyphicon glyphicon-home"> Back to Home</span>
+      </button>
+      
+      	<button type="submit" class="btn btn-primary" style="margin-left: 10%; margin-right: 10%; padding-right: 2%; padding-left: 2%" >
+      	  <span class="glyphicon glyphicon-search"></span> Select
+      	</button>
+
+
+
+         <div class="btn-group">
+          <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Sort By
+          <span class="caret"></span></button>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href=""> Name </a></li>
+            <div class="dropdown-divider"></div>
+            <li><a class="dropdown-item" href="#"> ID </a></li>
+            <div class="dropdown-divider"></div>
+            <li><a class="dropdown-item" href="#"> Period of stay </a></li>
+          </ul>
+        </div> 
+        
+        <button  class="btn btn-success" style="margin-left: 10%; margin-right: 10%; padding-right: 2%; padding-left: 2%" >
+          <span class="glyphicon glyphicon-print"></span> Get Email List
+        </button>
+
+      	<button type="button"  class="btn btn-primary" style="height: 34px; float: right;" onclick="reset_filter()" >
+      		<span class="glyphicon glyphicon-refresh"> Reset</span>
+      	</button>
+
+    </div>
+  </form>
+
+  <table class="table table-bordered" style="font-family: 'Times New Roman', Times, serif; background-color: #f4f7f6" >
+    <thead>
+      <tr>
+        <th><center> ID</center></th>
+        <th><center> Name</center></th>
+        <th><center> Email </center></th>
+      </tr>
+    </thead>
+    <tbody>
+
+      {% for user in filter.qs %}
+        <tr>
+
+          <td ><center>{{ user.person_id }}</center> </td>
+          <td><center>{{ user.prefix }} {{ user.first_name }} {{ user.middle_name }} {{ user.last_name }}   </center>  </td>
+         <td><center>{{ user.x }}   </center>  </td>
+          
+          
+        </tr>
+      {% empty %}
+        <tr>
+          <td colspan="5">No data</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

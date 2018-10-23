@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Home</title>
+  <link rel="shortcut icon" type="image/png" href="/static/images/1508648122.ico">
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCGcGeqELsdG7kQQevWDQRJMUbdh-wV3yw"
+  type="text/javascript"></script>
+</head>
+<body>
+  <script type="text/javascript">
+      var directionsDisplay;
+      var directionsService;
+      var map;
+
+      function initialize(address) {
+        location.href ='#map'
+        $('#map').css({'border':'5px solid #2196F3'});
+        $('#map').css({'height':'500px'});
+        directionsDisplay = new google.maps.DirectionsRenderer();
+        var home = new google.maps.LatLng(12.9510403, 77.5749214);
+        var mapOptions = {
+          zoom:15,
+          center: home,
+          mapTypeId: google.maps.MapTypeId.roadmap
+        }
+        $('#map').css('width: 400px, height: 400px ');
+        map = new google.maps.Map(document.getElementById('map'), mapOptions);
+        directionsDisplay.setMap(map);
+
+        
+        directionsDisplay.setOptions({
+        polylineOptions: {
+                    strokeWeight: 5,
+                    strokeOpacity: 1,
+                    strokeColor:  'green' 
+                }
+        });
+
+
+        calcRoute(address);
+      }
+
+
+      function calcRoute(address) {  
+        directionsService = new google.maps.DirectionsService();    
+        var home = new google.maps.LatLng(12.9509784, 77.574676);
+        
+        var request = {
+            origin: home,
+            destination: address ,
+            provideRouteAlternatives:true,
+            travelMode: 'DRIVING'
+         };
+
+        directionsService.route(request, function(result, status) {
+            if (status == 'OK') {
+              directionsDisplay.setDirections(result);
+             
+            }
+        }); 
+
+        
+        
+      }
+
+      function transaction(){
+        location.href ='#map'
+        $('#map').css({'border':''});
+        $('#map').css({'height':''});
+        
+        document.getElementById('map').innerHTML = '<header class="w3-container ">'+
+       ' <center><p style="color: black; font-size: 40px; padding-top: 2%">Tansactions</p></center>' + 
+     ' </header>' +
+      
+     ' <div class="w3-container" style="padding-top: 0%;padding-bottom: 5%">'+
+            '<div class="w3-container" style="padding-top: 2%; ">'+
+                   ' <div class="panel panel-primary" >'+
+                      '<div class="panel-heading"><center>Amount</center></div>'+
+                     ' <div class="panel-body">'+
+                        '  <table>'+
+                          '  <tr>'+
+                              '<th> Date </th>'+
+                             ' <th>Receipt Number</th>'+
+                            '  <th>Donation Mode</th>'+
+                            '  <th>Amount</th>'+
+                             ' <th>Purpose</th>'+
+                              '<th>Donation Type</th>'+
+                          '  </tr>'+
+                          '  {% for i in transaction %}'+
+                             '  {% if i.0 == "Amount" %}'+
+                              '  <tr>'+
+                                  '<td>{{ i.2 }}</td>'+
+                                  '<td>{{ i.3 }}</td>'+
+                                  '<td>{{ i.1 }}</td>'+
+                                 ' <td>{{ i.4 }}</td>'+
+                                  '<td>{{ i.6 }}</td>'+
+                                  '<td>{{ i.8 }} ({{ i.7 }})</td>'+
+                                '</tr> ' +
+
+                              ' {% endif %}'+
+                           ' {% endfor %}'+
+                            
+                            
+                         ' </table>'+
+                          
+                       '</div>'+
+                  '  </div>'+
+             ' </div>'+
+           ' <div class="w3-container" style="padding-top: 2%; ">'+
+                    '<div class="panel panel-primary" >'+
+                      '<div class="panel-heading"><center>Things</center></div>'+
+                      '<div class="panel-body">'+
+                            '<table >'+
+                            '<tr >'+
+                              '<th> Date </th>'+
+                             ' <th> Thing </th>' +
+                              '<th> Donation Type </th> '+
+                           ' </tr>'+
+                           ' {% for i in transaction %}'+
+                              ' {% if i.0 == "Other" %}'+
+                               ' <tr>'+
+                                '  <td>Nov. 1, 2017 </td>'+
+                                 ' <td>{{ i.5 }}</td>'+
+                                 ' <td>{{ i.8 }} ({{ i.7 }}) </td>'+
+                               ' </tr>  '     +
+
+                              ' {% endif %}'+
+                           ' {% endfor %}'+
+                            
+                            
+                         ' </table>'+
+                          
+                      ' </div>'+
+                   ' </div>'+
+              '</div>'+
+
+      
+      '</div>'
+
+      }
+
+
+    var person_ids = [];
+    var index_to_current = 0;
+    var person_current_id = '{{ id }}';
+
+  </script>
+  <style>
+  table {
+      border-collapse: collapse;
+      width: 100%;
+  }
+
+  th, td {
+      text-align: left;
+      padding: 8px;
+  }
+
+  tr:nth-child(even){background-color: #f2f2f2}
+
+  th {
+      background-color: #D9EDF7;
+      color: blue;
+  }
+  </style>
+  <a href="" onclick="previous()" class="btn btn-primary btn-lg" style="margin-top: 1%; margin-left:2.2% ">
+          <span class="glyphicon glyphicon-arrow-left"></span> Previous
+  </a>
+  <a href=""onclick="next()" class="btn btn-primary btn-lg" style="margin-top: 1%; margin-right:2.2% ; float: right;">
+            Next <span class="glyphicon glyphicon-arrow-right"></span> 
+    </a>
+  <div class="container-fluid">
+
+    <div class="row">
+      <div class="col-sm-4" style="">
+       <div class="w3-container" style="padding-top: 4%">
+        
+
+        <div class="w3-card-4 bg-primary" style="width:100%; ">
+
+          <div class="w3-container w3-center">
+            <h3></h3>
+            <img src="/static/images/profile.png" alt="Avatar" style="width:80%">
+            <h3> {{ name }}  </h3>
+
+            <div class="w3-section">
+              <button class="w3-button w3-grey">{{ id }}</button>
+            </div>
+          </div>
+            {% for i in person_ids %}
+            <script type="text/javascript">
+              person_ids.push('{{ i }}');
+
+            </script>
+
+
+            {% endfor %}
+            <script type="text/javascript">
+              (function () {
+                  for(var i=0; i< person_ids.length ; i++){
+                      if( person_ids[i] == person_current_id){
+                        break;
+                      }else{
+                        index_to_current += 1 ;
+                      }
+                  }
+                  alert(index_to_current)
+              })();
+
+              function next(){
+                if(index_to_current < (person_ids.length-1)){
+                  index_to_current += 1;
+                  person_current_id = person_ids[index_to_current];
+                  location.href = "/Home/profile/"+person_current_id;
+                }
+              }
+              function previous(){
+                if(index_to_current > 0){
+                  index_to_current -= 1;
+                  person_current_id = person_ids[index_to_current];
+                  location.href = "/Home/profile/"+person_current_id;
+                }
+              }
+
+            </script>
+        </div> 
+        <center style="padding-top: 20%">
+          <button type="button" class="btn btn-primary" style="padding: 5%" onclick="transaction()">&nbsp;&nbsp; Transaction &nbsp;&nbsp; </button>&nbsp;&nbsp;
+          <button type="button" class="btn btn-primary" style="padding: 5%" onclick="initialize('{{ address }}')"> Address in Map </button>
+        </center>
+        
+
+      </div>
+
+
+
+    </div>
+
+    <div class="col-sm-8" >
+      
+
+     <div class="w3-container" style="padding-top: 2%;padding-bottom: 5%">
+
+
+
+      <div class="w3-card-4" style="width:100%; min-height: 420px ; ">
+        <header class="w3-container w3-blue">
+          <center><h1>{{ name }}</h1></center> 
+        </header>
+
+        <div class="w3-container" style="padding-top: 2%; ">
+                <div class="panel panel-info" >
+                  <div class="panel-heading"><center> Address</center></div>
+                  <div class="panel-body">
+                      <p><span class="glyphicon glyphicon-home">{% if house_number %} #{{ house_number }} {% else %} ---- {% endif %} 
+                       {% if house_name %} {{ house_name }} {% endif %}
+                      {%  if street_address %}
+                      </span>&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-road"> {{ street_address }}</span>
+                      {% endif %}
+                      </p>
+                      <p style="padding-left: 4%">{%if city %} {{ city }} {% endif %} {% if zipcode %} - {{ zipcode }} {% endif %} </p><p style="padding-left: 4%">
+                      {% if state %}
+                      {{ state }} ( {{ country }} )
+                      {% endif %}
+                      </p>
+                      {% if land_mark %}
+                      <p><span class="glyphicon glyphicon-flag"> {{ land_mark }} </span></p>
+                      {% endif %}
+                      
+                   </div>
+                </div>
+          </div>
+          <div class="w3-container" style="padding-top: 2%; ">
+                  <div class="panel panel-info" >
+                    <div class="panel-heading"><center> Contact Information</center></div>
+                    <div class="panel-body">
+                        
+                        
+                        <p><span class="glyphicon glyphicon-earphone"> 
+
+                              {% for i in landline %}
+                                      {{ i }}
+                              {% endfor %}
+
+                        </span></p>
+                        <p><span class="glyphicon glyphicon-phone">
+                                {% for i in phone %}
+                                        {{ i }}
+                                {% endfor %}
+                        </span></p>
+                        <p><span class="glyphicon glyphicon-envelope">
+                            {% for i in email %}
+                                    {{ i }}
+                            {% endfor %}
+
+
+                         </span></p>
+                     </div>
+                  </div>
+            </div>
+          <div class="w3-container" style="padding-top: 2%;">
+                  <div class="panel panel-info" >
+                    <div class="panel-heading"><center><span class="glyphicon glyphicon-info-sign"> Additional Information</span></center></div>
+                    <div class="panel-body">
+                      <p><strong>Date of Birth</strong>  -  {{ date_of_birth }} </p>
+                      <p><strong>Reference Person's ID </strong>  - {{ reference_person }} </p>
+                      <p><strong>Period of staying in Home</strong> - {{ period_of_stay_start }}-{{ period_of_stay_end }} </p>
+                      <p><strong>Mode of Communication</strong> - {{ mode_of_communication }} </p>
+                     </div>
+                  </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="container-fluid " id="transaction" style="padding-left: 5%; padding-bottom: 7%; padding-right:5%;">
+
+  <div class="row">
+
+    <div class="col-sm-12" style="box-shadow: 0px 0px 30px #aaaaaa; " id="map">
+      <header class="w3-container ">
+        <center><p style="color: black; font-size: 40px; padding-top: 2%">Tansactions</p></center> 
+      </header>
+      
+      <div class="w3-container" style="padding-top: 0%;padding-bottom: 5%">
+            <div class="w3-container" style="padding-top: 2%; ">
+                    <div class="panel panel-primary" >
+                      <div class="panel-heading"><center>Amount</center></div>
+                      <div class="panel-body">
+                          <table>
+                            <tr>
+                              <th> Date </th>
+                              <th>Receipt Number</th>
+                              <th>Donation Mode</th>
+                              <th>Amount</th>
+                              <th>Purpose</th>
+                              <th>Donation Type</th>
+                            </tr>
+                            {% if transaction %}
+                            {% for i in transaction %}
+                               {% if i.0 == "Amount" %}
+                                <tr>
+                                  <td>{{ i.2 }}</td>
+                                  <td>{{ i.3 }}</td>
+                                  <td>{{ i.1 }}</td>
+                                  <td>{{ i.4 }}</td>
+                                  <td>{{ i.6 }}</td>
+                                  <td>{{ i.8 }} ({{ i.7 }})</td>
+                                </tr>       
+
+                               {% endif %}
+                            {% endfor %}
+                            {% endif %}
+                            
+                            
+                          </table>
+                          
+                       </div>
+                    </div>
+              </div>
+            <div class="w3-container" style="padding-top: 2%; ">
+                    <div class="panel panel-primary" >
+                      <div class="panel-heading"><center>Things</center></div>
+                      <div class="panel-body">
+                            <table >
+                            <tr >
+                              <th> Date </th>
+                              <th> Thing </th> 
+                              <th> Donation Type </th> 
+                            </tr>
+                            {% for i in transaction %}
+                               {% if i.0 == "Other" %}
+                                <tr>
+                                  <td>Nov. 1, 2017 </td>
+                                  <td>{{ i.5 }}</td>
+                                  <td>{{ i.8 }} ({{ i.7 }}) </td>
+                                </tr>       
+
+                               {% endif %}
+                            {% endfor %}
+                            
+                            
+                          </table>
+                          
+                       </div>
+                    </div>
+              </div>
+
+      
+      </div>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+</body>
+</html>
+

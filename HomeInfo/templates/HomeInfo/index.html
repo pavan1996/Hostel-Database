@@ -1,0 +1,183 @@
+<!doctype html>
+
+<html class="no-js" lang="">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Home</title>
+<link rel="shortcut icon" type="image/png" href="/static/images/1508648122.ico">
+<link rel="stylesheet" href="/static/css/bootstrap.min.css">
+<link rel="stylesheet" href="/static/css/jquery.fancybox.css">
+<link rel="stylesheet" href="/static/css/main.css">
+<link rel="stylesheet" href="/static/css/responsive.css">
+<link rel="stylesheet" href="/static/css/animate.min.css">
+<link rel="stylesheet" href="/static/css/font-awesome.min.css">
+</head>
+
+<body>
+<script type="text/javascript">
+  function link_to_create_person() {
+    location.href = '/Home/infoentry/';
+  }
+
+  function link_to_update_person(){
+    location.href= '/Home/updateinfo/'
+  }
+
+  function link_to_search_person(){
+    location.href = '/Home/filter/'
+  }
+
+
+  function link_to_features(){
+    location.href = '/Home/features/'
+  }
+
+
+</script>
+<!-- header section -->
+<section class="banner" role="banner"  >
+  <header id="header"> 
+    <!-- navigation section  -->
+    <div class="header-content clearfix"> <a class="logo" href="/Home"><img src="/static/images/home_logo.jpg"  height="75px" width="100px" alt="Home"></a>
+      <nav class="navigation" role="navigation">
+        <ul class="primary-nav">
+          <li><a href="/Home/paymentmode">Add Payment Mode</a> </li>
+          <li><a href="/Home/purpose">Add Purpose</a> </li>
+          <li><a href="/Home/about/">About Me</a></li>
+          <li><a href="/Home/contact/">Contact</a></li>
+         <!--  <li><a href="#">External link</a></li> -->
+        </ul>
+      </nav>
+      <a href="#" class="nav-toggle">Menu<span></span></a> </div>
+    <!-- navigation section  --> 
+  </header>
+  
+  <!-- banner text -->
+  <div class="container">
+    <div class="col-md-10 col-md-offset-1">
+      <div class="banner-text text-center">
+        <h1>Hey, There</h1>
+        <p>Looking for Information <br>
+          Scroll down.</p>
+          <table align="center">
+            
+          <tr>
+
+            <td>
+              <form action="/Home/quick_search_id/" method="POST">
+                  {% csrf_token %}
+                  <input type="text" style="height: 50px; color: black;" name="id" placeholder="ID" required>
+                   <button style="color: blue; font-size: 18px; visibility: hidden;"></button>
+                  
+              </form>
+            </td>
+            <td>
+               <form action="/Home/quick_search_name/" method="POST">
+              {% csrf_token %}
+              <input style="height: 50px; color: black" type="text" name="name" placeholder="Name" required>
+              <button style="color: blue; font-size: 18px; visibility: hidden;"></button>
+          </form>
+            </td>
+
+          </tr>
+
+          </table>
+         
+
+        
+      </div>
+    </div>
+  </div>
+</section>
+<!-- header section --> 
+<!-- description text section -->
+<!-- <section id="descripton" class="section descripton">
+  <div class="container">
+    <div class="col-md-10 col-md-offset-1 text-center">
+      <p>Bla Bla Bla Bla<br>Bla Bla Bla Bla<br>Bla Bla Bla Bla<br>Bla Bla Bla Bla<br>Bla Bla Bla Bla<br> </p>
+    </div>
+  </div>
+</section> -->
+<!-- description text section --> 
+<!-- portfolio section -->
+
+<section id="works" class="works section no-padding">
+  <div class="container-fluid">
+    <div class="row no-gutter">
+      
+      <div class="col-lg-3 col-md-6 col-sm-6 work" onclick="link_to_create_person()"> <a href="/Home/infoentry/" class="work-box"> <img src="/static/images/2.ico" style="height: 400px" alt="">
+        <div class="overlay">
+          <div class="overlay-caption">
+            <h4 style="color: white"> ADD PERSON</h4>
+            <p>Create a new person here</p>
+          </div>
+        </div>
+        <!-- overlay --> 
+        </a> 
+      </div>
+      <div class="col-lg-3 col-md-6 col-sm-6 work" onclick="link_to_update_person()"> <a href="/Home/updateinfo/" class="work-box"> <img src="/static/images/1.png" style="height: 400px" alt="">
+        <div class="overlay">
+          <div class="overlay-caption">
+            <h4 style="color: white"> UPDATE PERSON</h4>
+            <p>Update information of the person</p>
+          </div>
+        </div>
+        <!-- overlay --> 
+        </a> </div>
+      <div class="col-lg-3 col-md-6 col-sm-6 work" onclick="link_to_features()" > <a href="/static/images/work-3.jpg" class="work-box"> <img src="/static/images/work-3.jpg" style="height: 400px" alt="">
+        <div class="overlay">
+          <div class="overlay-caption">
+            <h4 style="color: white"> Features</h4>
+            <p>Get the data in which form you want</p>
+          </div>
+        </div>
+        <!-- overlay --> 
+        </a> </div>
+      <div class="col-lg-3 col-md-6 col-sm-6 work" onclick="link_to_search_person()"> <a href="/Home/filter/" class="work-box"> <img src="/static/images/3.jpg" style="height: 400px" alt="">
+        <div class="overlay">
+          <div class="overlay-caption">
+            <h4 style="color: white">SEARCH </h4>
+            <p>Search for persons information</p>
+          </div>
+        </div>
+        <!-- overlay --> 
+        </a> </div>
+      
+        <!-- overlay --> 
+        </a> </div>
+    </div>
+  </div>
+</section>
+<!-- portfolio section --> 
+<!-- hire me section -->
+<section id="hireme" class="section hireme">
+  <div class="container">
+    <div class="col-md-8 col-md-offset-2 text-center">
+      
+  </div>
+</section>
+<!-- hire me section --> 
+<!-- footer -->
+<footer class="section footer">
+  <div class="footer-bottom">
+    <div class="container">
+      <div class="col-md-12">
+        
+      </div>
+    </div>
+  </div>
+</footer>
+<!-- footer --> 
+
+<!-- JS FILES --> 
+<script src="/static/js/jquery.min1.js"></script> 
+<script src="/static/js/bootstrap.min.js"></script> 
+<script src="/static/js/jquery.fancybox.pack.js"></script> 
+<script src="/static/js/jquery.waypoints.min.js"></script> 
+<script src="/static/js/retina.min.js"></script> 
+<script src="/static/js/modernizr.js"></script> 
+<script src="/static/js/main.js"></script>
+</body>
+</html>

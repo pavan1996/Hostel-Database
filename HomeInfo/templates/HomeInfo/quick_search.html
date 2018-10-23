@@ -1,0 +1,75 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+<link rel="stylesheet" type="text/css" href="/static/table_format/vendor/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="/static/table_format/vendor/animate/animate.css">
+<link rel="stylesheet" type="text/css" href="/static/table_format/vendor/select2/select2.min.css">
+<link rel="stylesheet" type="text/css" href="/static/table_format/vendor/perfect-scrollbar/perfect-scrollbar.css">
+<link rel="stylesheet" type="text/css" href="/static/table_format/css/util.css">
+<link rel="stylesheet" type="text/css" href="/static/table_format/css/main.css">
+<script src="/static/table_format/vendor/jquery/jquery-3.2.1.min.js"></script>
+<script src="/static/table_format/vendor/bootstrap/js/popper.js"></script>
+<script src="/static/table_format/vendor/bootstrap/js/bootstrap.min.js"></script>
+<script src="/static/table_format/vendor/select2/select2.min.js"></script>
+<script src="/static/table_format/vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+<script src="/static/table_format/js/main.js"></script>
+
+<script type="text/javascript">
+	
+function profile(id){
+	location.href = '/Home/profile/'+id+'/';
+}
+
+
+$('.js-pscroll').each(function(){
+	var ps = new PerfectScrollbar(this);
+
+	$(window).on('resize', function(){
+		ps.update();
+	})
+});
+		
+
+</script>
+
+<div class="limiter">
+	<div class="container-table100">
+		<div class="wrap-table100">
+			<div class="table100 ver1 m-b-110">
+				<div class="table100-head">
+					<table>
+						<thead>
+							<tr class="row100 head">
+								<th class="cell100 column1">ID</th>
+								<th class="cell100 column2">Name</th>
+		
+							</tr>
+						</thead>
+					</table>
+				</div>
+
+				<div class="table100-body js-pscroll">
+					<table>
+						<tbody>
+
+							{% for person in persons %}
+								
+								<tr class="row100 body" onclick="profile('{{ person.person_id }}')">
+									
+								  <td class="cell100 column1">{{ person.person_id }}</td>
+								  <td class="cell100 column2">{{ person.first_name }} {{ person.middle_name }} {{ person.last_name }}</td>
+									
+								</tr>
+								
+							{% empty %}
+								<tr>
+									<td><h4 style="padding: 5%">No Matching Person for Searching word.</h4></td>
+								</tr>
+							{% endfor %}
+
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
